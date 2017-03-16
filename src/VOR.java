@@ -5,6 +5,7 @@ public class VOR {
 	
 
 	}
+	
 	public void getOBS(){
 		
 	}

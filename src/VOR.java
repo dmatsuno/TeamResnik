@@ -8,5 +8,9 @@ public class VOR {
 	public void getOBS(){
 		
 	}
+	
+	public boolean signal(){
+		return false; 
+	}
 
 }

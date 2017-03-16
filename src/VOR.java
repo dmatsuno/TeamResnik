@@ -9,7 +9,7 @@ public class VOR {
 		
 	}
 	
-	public boolean SignalStatus(){
+	public boolean isGoodSignal(){
 		return false; 
 	}
 

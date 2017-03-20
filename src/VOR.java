@@ -4,22 +4,23 @@ public class VOR {
 
 	public static void main(String[] args) {
 		VOR vor = new VOR();
-		vor.getOBS();
+		
+		int obs= vor.getOBS();
 	}
 	
 	
 	/**
 	 * Asks directly what obs settings are from pilot through console.
 	 */
-	public void getOBS(){
+	public int getOBS(){
 		Scanner scan = new Scanner(System.in);
 		
 		System.out.println("What is your obs setting?");
 		int obs = scan.nextInt();
 		
-		System.out.println("Your obs is " + obs);
-		
 		scan.close();
+		
+		return obs;
 	}
 	
 	/**

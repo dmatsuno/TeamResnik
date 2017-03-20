@@ -6,6 +6,13 @@ public class VOR {
 		VOR vor = new VOR();
 		
 		int obs= vor.getOBS();
+		int signal = vor.getSignal();
+		
+		String typeTF = vor.getToAndFrom(obs,signal);
+		
+		System.out.println("Obs: " + obs);
+		System.out.println("Signal: " + signal);
+		System.out.println("To or From: " + typeTF);
 	}
 	
 	
@@ -17,24 +24,62 @@ public class VOR {
 		
 		System.out.println("What is your obs setting?");
 		int obs = scan.nextInt();
-		
-		scan.close();
-		
+
 		return obs;
 	}
 	
 	/**
 	 * Asks directly what the radio signal is through console.
 	 */
-	public void getSignal(){
+	public int getSignal(){
 		Scanner scan = new Scanner(System.in);
 		
 		System.out.println("What is your signal setting?");
 		int signal = scan.nextInt();
 		
-		System.out.println("Your signal is " + signal);
+		return signal;
+	}
+	
+	/**
+	 * Checks if it is a to or from signal.
+	 */
+	public String getToAndFrom(int obs, int signal){
+		int lowest = 0;
+		int highest = 0;
 		
-		scan.close();
+		if(obs < 90){ 
+			lowest = (obs - 90) + 360;		
+			highest = obs + 90;
+			
+			if(signal >= lowest || signal <= highest){
+				return "FROM";
+			}
+			else {
+				return "TO";
+			}
+		}
+		else if(obs >= 90 && obs <= 270){
+			lowest = obs - 90;
+			highest = obs + 90;
+			
+			if(signal >= lowest && signal <= highest){
+				return "FROM";
+			}
+			else {
+				return "TO";
+			}
+		}
+		else{
+			lowest = obs - 90;
+			highest = (obs + 90) - 360;
+			
+			if(signal >= lowest || signal <= highest ){
+				return "FROM";
+			}
+			else {
+				return "TO";
+			}
+		}		
 	}
 	
 	/**

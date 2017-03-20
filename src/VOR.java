@@ -23,6 +23,20 @@ public class VOR {
 	}
 	
 	/**
+	 * Asks directly what the radio signal is through console.
+	 */
+	public void getSignal(){
+		Scanner scan = new Scanner(System.in);
+		
+		System.out.println("What is your signal setting?");
+		int signal = scan.nextInt();
+		
+		System.out.println("Your signal is " + signal);
+		
+		scan.close();
+	}
+	
+	/**
 	 * If the plane is directly above the station then it will be a bad signal and will 
 	 *@return false
 	 */

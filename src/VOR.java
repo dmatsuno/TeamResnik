@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class VOR {
@@ -13,6 +14,17 @@ public class VOR {
 		System.out.println("Obs: " + obs);
 		System.out.println("Signal: " + signal);
 		System.out.println("To or From: " + typeTF);
+                
+                System.out.println();
+        
+                int obs2= vor.getOBS();
+                int radio = vor.randomRadio();
+
+                String typeTF2 = vor.getToAndFrom(obs2,radio);
+
+                System.out.println("Obs2: " + obs2);
+                System.out.println("Signal2: " + radio);
+                System.out.println("To or From (2): " + typeTF2);
 	}
 	
 	
@@ -89,5 +101,16 @@ public class VOR {
 	public boolean isGoodSignal(){
 		return false; 
 	}
+        
+        /**
+        * Create a fake random radio
+        */
+        public int randomRadio() {
+            int result = 0;
+            Random randNum = new Random();
+            result = randNum.nextInt(360);
+//          System.out.println(result);
+            return result;
+        }
 
 }

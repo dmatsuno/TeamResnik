@@ -23,7 +23,8 @@ public class VOR {
 	}
 	
 	/**
-	 * @return
+	 * If the plane is directly above the station then it will be a bad signal and will 
+	 *@return false
 	 */
 	public boolean isGoodSignal(){
 		return false; 

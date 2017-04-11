@@ -42,6 +42,7 @@ public class VOR {
 	
 	/**
 	 * Asks directly what the radio signal is through console.
+	 * Change once we get station.
 	 */
 	public int getSignal(){
 		Scanner scan = new Scanner(System.in);
@@ -95,11 +96,16 @@ public class VOR {
 	}
 	
 	/**
-	 * If the plane is directly above the station then it will be a bad signal and will 
+	 * The radius of the cone of confusion is 10. 
 	 *@return false
 	 */
-	public boolean isGoodSignal(){
-		return false; 
+	public boolean isGoodSignal(int xSLocation, int ySlocation, int xPLocation, int yPlocation){
+		if( (Math.abs(xSlocation - xPlocation) < 10) || (Math.abs(ySlocation - yPlocation) <10) ) {
+			return false; 
+		}
+		else{
+			return true;
+		}
 	}
         
         /**

@@ -6,25 +6,38 @@ public class VOR {
 	public static void main(String[] args) {
 		VOR vor = new VOR();
 		
-		int obs= vor.getOBS();
-		int signal = vor.getSignal();
-		
-		String typeTF = vor.getToAndFrom(obs,signal);
-		
-		System.out.println("Obs: " + obs);
-		System.out.println("Signal: " + signal);
-		System.out.println("To or From: " + typeTF);
-                
-                System.out.println();
-        
-                int obs2= vor.getOBS();
-                int radio = vor.randomRadio();
+//		int obs= vor.getOBS();
+//		int signal = vor.getSignal();
+//		
+//		String typeTF = vor.getToAndFrom(obs,signal);
+//		
+//		System.out.println("Obs: " + obs);
+//		System.out.println("Signal: " + signal);
+//		System.out.println("To or From: " + typeTF);
+//                
+//    System.out.println();
+//        
+//    int obs2= vor.getOBS();
+//    int radio = vor.randomRadio();
+//
+//    String typeTF2 = vor.getToAndFrom(obs2,radio);
+//
+//    System.out.println("Obs2: " + obs2);
+//    System.out.println("Signal2: " + radio);
+//    System.out.println("To or From (2): " + typeTF2);
 
-                String typeTF2 = vor.getToAndFrom(obs2,radio);
-
-                System.out.println("Obs2: " + obs2);
-                System.out.println("Signal2: " + radio);
-                System.out.println("To or From (2): " + typeTF2);
+    /*
+    Test cases 360*360
+     */
+    for (int i = 0; i < 361; i++) {
+      for (int j = 0; j < 361; j++) {
+        String typeTF3 = vor.getToAndFrom(i,j);
+        System.out.println("(Test) Obs: " + i);
+        System.out.println(" (Test) Signal: " + j);
+        System.out.println(" (Test) To or From: " + typeTF3);
+        System.out.println();
+      }
+    }
 	}
 	
 	

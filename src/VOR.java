@@ -39,6 +39,20 @@ public class VOR {
                     System.out.println();
                 }
             }
+		
+	for (int i = 0; i < 361; i++) {
+            for (int j = 0; j < 361; j++) {
+                String typeTF3 = vor.getToAndFrom(i,j);
+                System.out.println("(Test) Obs: " + i);
+                System.out.println("(Test) Radio: " + j);
+                String isGood = vor.isGoodSignal(i, j, "GOOD");
+                System.out.println("(Test) Good or Bad: " + isGood);
+                if (isGood.equals("GOOD")) {
+                    System.out.println("(Test) To or From: " + typeTF3);
+                }
+                System.out.println();
+            }
+        }
         }
 	
 	
@@ -112,114 +126,222 @@ public class VOR {
 	 * If the plane is directly above the station then it will be a bad signal and will 
 	 *@return false
 	 */
-	public String isGoodSignal(int obs, int signal) {
-            String result = "Error";
-            int lowest = 0;
-            int highest = 0;
-            int range1 = 0;
-            int range2 = 0;
-            if(obs < 90) { 
-                lowest = (obs - 90) + 360;		
-                highest = obs + 90;
-
-                if(signal >= lowest || signal <= highest){
-                    // FROM
-                    range1 = lowest + 80;
-                    range2 = highest - 80;
-                    if (range1 > 360) {
-                        range1 = range1 - 360;
-                        if (signal <= range1 && signal >= range2) {
-                            result = "GOOD";
-                        } else {
-                            result = "BAD";
-                        }
-                    }
-                    if (signal >= range1 || signal <= range2) {
-                        result = "GOOD";
+	public String isGoodSignal(int obs, int signal, String isGood) {
+        String result = isGood;
+        int lowest = 0;
+	int highest = 0;
+        int range1 = 0;
+	int range2 = 0;
+        int diff = 0;
+        if(obs < 90) { 
+            lowest = (obs - 90) + 360;		
+            highest = obs + 90;
+			
+            if(signal >= lowest || signal <= highest){
+                // FROM
+                if (obs > signal) {
+                    diff = obs - signal;
+                    if (diff <= 10) {
+                        System.out.println(diff + " degree off, to Right");
+                        return result;
                     } else {
-                        result = "BAD";
-                    }
+                        if (diff >= 89 && diff <= 91) {
+                            result = "BAD";
+                            return result;
+                        }
+                       System.out.println("More than ten degree off, to Right");
+                       return result;
+                   }
                 } else {
-                    // TO 
-                    range1 = lowest - 80;
-                    range2 = highest + 80;
-                    if (signal <= range1 && signal >= range2) {
-                        result = "GOOD";
+                    if (signal > highest) {
+                        obs = obs + 360;
+                        diff = obs - signal;
                     } else {
-                        result = "BAD";
+                        diff = signal - obs;
                     }
-
-                }
-            } else if(obs >= 90 && obs <= 270) {
-                lowest = obs - 90;
-                highest = obs + 90;
-
-                if(signal >= lowest && signal <= highest) {
-                    // FROM
-                    range1 = lowest + 80;
-                    range2 = highest - 80;
-                    if (signal >= range1 && signal <= range2) {
-                        result = "GOOD";
+                   if (diff <= 10) {
+                        System.out.println(diff + " degree off, to Left");
+                        return result;
                     } else {
-                        result = "BAD";
-                    }
-                } else {
-                    // TO
-                    range1 = lowest - 80;
-                    range2 = highest + 80;
-                    if (range2 > 360) {
-                        range2 = range2 - 360;
-                        if (signal <= range1 && signal >= range2) {
-                            result = "GOOD";
-                        } else {
+                       if (diff >= 89 && diff <= 91) {
                             result = "BAD";
+                            return result;
                         }
-                    }
-                    if (range1 < 0) {
-                        range1 = range1 + 360;
-                        if (signal <= range1 && signal >= range2) {
-                            result = "GOOD";
-                        } else {
-                            result = "BAD";
-                        }
-                    }
+                       System.out.println("More than ten degree off, to Left");
+                       return result;
+                   }
                 }
             } else {
-                lowest = obs - 90;
-                highest = (obs + 90) - 360;
-
-                if(signal >= lowest || signal <= highest ) {
-                    // FROM
-                    range1 = lowest + 80;
-                    range2 = highest - 80;
-                    // 1 = 345
-                    if (range2 < 0) {
-                        range2 = range2 + 360; // 
-                        if (signal >= range1 && signal <= range2) {
-                            result = "GOOD";
-                        } else {
+                // TO 
+		obs = obs + 180;
+                if (obs > signal) {
+                    diff = obs - signal;
+                    if (diff <= 10) {
+                        System.out.println(diff + " degree off, to Left");
+                        return result;
+                    } else {
+                        if (diff >= 89 && diff <= 91) {
                             result = "BAD";
+                            return result;
                         }
-                    }
-                    if(signal >= range1 || signal <= range2 ) {
-                        result = "GOOD";
-                    } else {
-                        result = "BAD";
-                    }
+                       System.out.println("More than ten degree off, to Left");
+                       return result;
+                   }
                 } else {
-                    // TO
-                    range1 = lowest - 80;
-                    range2 = highest + 80;
-                    if (signal <= range1 && signal >= range2) {
-                        result = "Good";
+                    diff = signal - obs;
+                   if (diff <= 10) {
+                        System.out.println(diff + " degree off, to Right");
+                        return result;
                     } else {
-                        result = "Bad";
-                    }
+                       if (diff >= 89 && diff <= 91) {
+                            result = "BAD";
+                            return result;
+                        }
+                       System.out.println("More than ten degree off, to Right");
+                       return result;
+                   }
                 }
             }
-
-            return result; 
+	} else if(obs >= 90 && obs <= 270) {
+            lowest = obs - 90;
+            highest = obs + 90;
+			
+            if(signal >= lowest && signal <= highest) {
+                // FROM
+                if (obs > signal) {
+                    diff = obs - signal;
+                    if (diff <= 10) {
+                        System.out.println(diff + " degree off, to Right");
+                        return result;
+                    } else {
+                        if (diff >= 89 && diff <= 91) {
+                            result = "BAD";
+                            return result;
+                        }
+                       System.out.println("More than ten degree off, to Right");
+                       return result;
+                   }
+                } else {
+                   diff = signal - obs;
+                   if (diff <= 10) {
+                        System.out.println(diff + " degree off, to Left");
+                        return result;
+                    } else {
+                       if (diff >= 89 && diff <= 91) {
+                            result = "BAD";
+                            return result;
+                        }
+                       System.out.println("More than ten degree off, to Left");
+                       return result;
+                   }
+                }
+            } else {
+                // TO
+                obs = obs + 180;
+                if (obs > signal) {
+                    diff = obs - signal;
+                    if (diff <= 10) {
+                        System.out.println(diff + " degree off, to Left");
+                        return result;
+                    } else {
+                        if (diff >= 89 && diff <= 91) {
+                            result = "BAD";
+                            return result;
+                        }
+                       System.out.println("More than ten degree off, to Left");
+                       return result;
+                   }
+                } else {
+                    if (signal < lowest) {
+                        signal = signal + 360;
+                        diff = signal - obs;
+                    } else {
+                        diff = signal - obs;
+                    }
+                   if (diff <= 10) {
+                        System.out.println(diff + " degree off, to Right");
+                        return result;
+                    } else {
+                       if (diff >= 89 && diff <= 91) {
+                            result = "BAD";
+                            return result;
+                        }
+                       System.out.println("More than ten degree off, to Right");
+                       return result;
+                   }
+                }
+            }
+        } else {
+            lowest = obs - 90;
+            highest = (obs + 90) - 360;
+            
+            if(signal >= lowest || signal <= highest ) {
+                // FROM
+                if (obs > signal) {
+                    diff = obs - signal;
+                    if (diff <= 10) {
+                        System.out.println(diff + " degree off, to Right");
+                        return result;
+                    } else {
+                        if (diff >= 89 && diff <= 91) {
+                            result = "BAD";
+                            return result;
+                        }
+                       System.out.println("More than ten degree off, to Right");
+                       return result;
+                   }
+                } else {
+                    if (signal < highest) {
+                        signal = signal + 360;
+                        diff = signal - obs;
+                    } else {
+                        diff = signal - obs;
+                    }
+                    if (diff <= 10) {
+                        System.out.println(diff + " degree off, to Left");
+                        return result;
+                    } else {
+                        if (diff >= 89 && diff <= 91) {
+                            result = "BAD";
+                            return result;
+                        }
+                       System.out.println("More than ten degree off, to Left");
+                       return result;
+                   }
+                }
+            } else {
+                // TO
+                obs = obs + 180;
+                if (obs > signal) {
+                    diff = obs - signal;
+                    if (diff <= 10) {
+                        System.out.println(diff + " degree off, to Left");
+                        return result;
+                    } else {
+                        if (diff >= 89 && diff <= 91) {
+                            result = "BAD";
+                            return result;
+                        }
+                       System.out.println("More than ten degree off, to Left");
+                       return result;
+                   }
+                } else {
+                     diff = signal - obs;
+                   if (diff <= 10) {
+                        System.out.println(diff + " degree off, to Right");
+                        return result;
+                    } else {
+                       if (diff >= 89 && diff <= 91) {
+                            result = "BAD";
+                            return result;
+                        }
+                       System.out.println("More than ten degree off, to Right");
+                       return result;
+                   }
+                }
+            }
         }
+    }
         
         /**
         * Create a fake random radio

@@ -38,7 +38,7 @@ public class VOR {
 				String typeTF3 = vor.getToAndFrom(i,j);
                 		System.out.println("(Test) Obs: " + i);
                 		System.out.println("(Test) Radio: " + j);
-                		String isGood = vor.isGoodSignal(i, j, "GOOD");
+                		String isGood = vor.isGoodSignalD(i, j, "GOOD");
                 		System.out.println("(Test) Good or Bad: " + isGood);
                 		if (isGood.equals("GOOD")) {
                     			System.out.println("(Test) To or From: " + typeTF3);
@@ -140,7 +140,7 @@ public class VOR {
           
 	}
 	
-	public String isGoodSignal(int obs, int signal, String isGood) {
+	public String isGoodSignalD(int obs, int signal, String isGood) {
 		String result = isGood;
 		int lowest = 0;
 		int highest = 0;

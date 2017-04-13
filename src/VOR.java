@@ -4,52 +4,76 @@ import java.util.Scanner;
 public class VOR {
 
 	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		
 		VOR vor = new VOR();
+		Station s = new Station();
+		int stSignal = s.getSignal();
 		
-		int obs= vor.getOBS();
-		int signal = vor.getSignal();
 		
-		String typeTF = vor.getToAndFrom(obs,signal);
+		//Grid range
+		int gridX = 100;
+		int gridY = 100;
 		
-		System.out.println("Obs: " + obs);
-		System.out.println("Signal: " + signal);
-		System.out.println("To or From: " + typeTF);
-          
-      /**      
+		//Station location
+		int statX = gridX/2;
+		int statY = gridY/2;
+		
+		//Plane location
+		int planeX = (int)(Math.random() * gridX);
+		int planeY = (int)(Math.random() * gridY);
+		
+		
+		int option = -1;
+		
+		while(option != 0 ) {
+			System.out.println("Type the number and enter to chose your option.");
+			System.out.println("0) Exit");
+			System.out.println("1) Get VOR");
+			
+			option = scan.nextInt();
+					
+			if( option == 0 ) {
+				System.out.println("You exited the program.");		
+			} 
+			else if (option == 1) {
+			//getVOR
+
+				int obs= vor.setOBS();
+				int locationAngle = vor.setAngle();
+				
+				String typeTF = vor.getToAndFrom(obs, locationAngle);
+		
+				System.out.println("Obs: " + obs);
+				System.out.println("To or From: " + typeTF);
+		
+          		String isGood = vor.isGoodSignalD(obs, locationAngle, "GOOD");
+                System.out.println("Good or Bad: " + isGood);
+
                 System.out.println();
-        
-                int obs2= vor.getOBS();
-                int radio = vor.randomRadio();
-
-                String typeTF2 = vor.getToAndFrom(obs2,radio);
-
-                System.out.println("Obs2: " + obs2);
-                System.out.println("Signal2: " + radio);
-                System.out.println("To or From (2): " + typeTF2);
-	*/
-		for (int i = 0; i < 361; i++) {
-			for (int j = 0; j < 361; j++) {
-				String typeTF3 = vor.getToAndFrom(i,j);
-                		System.out.println("(Test) Obs: " + i);
-                		System.out.println("(Test) Radio: " + j);
-                		String isGood = vor.isGoodSignalD(i, j, "GOOD");
-                		System.out.println("(Test) Good or Bad: " + isGood);
-                		if (isGood.equals("GOOD")) {
-                    			System.out.println("(Test) To or From: " + typeTF3);
-               			}
-                		System.out.println();
-            		}
-        	}
+		
+			} 
+			else {
+				System.out.println("The option you chose does not exist. Please enter again.");
+			}
+			
+		
+		}
+		
+	
+	/////////////Uncomment below to activate in depth testing ////////////////////
+	//vor.testSignal();
+		
 	}
 	
 	
 	/**
 	 * Asks directly what obs settings are from pilot through console.
 	 */
-	public int getOBS(){
+	public int setOBS(){
 		Scanner scan = new Scanner(System.in);
 		
-		System.out.println("What is your obs setting?");
+		System.out.println("Set your obs setting");
 		int obs = scan.nextInt();
 
 		return obs;
@@ -59,38 +83,38 @@ public class VOR {
 	 * Asks directly what the radio signal is through console.
 	 * Change once we get station.
 	 */
-	public int getSignal(){
+	public int setAngle(){
 		Scanner scan = new Scanner(System.in);
 		
-		System.out.println("What is your signal setting?");
-		int signal = scan.nextInt();
+		System.out.println("Which location are you coming from (in degrees)?");
+		int angle = scan.nextInt();
 		
-		return signal;
+		return angle;
 	}
 	
 	/**
 	 * Checks if it is a to or from signal.
 	 */
-	public String getToAndFrom(int obs, int signal){
+	public String getToAndFrom(int out, int psignal){
 		int lowest = 0;
 		int highest = 0;
 		
-		if(obs < 90){ 
-			lowest = (obs - 90) + 360;		
-			highest = obs + 90;
+		if(out < 90){ 
+			lowest = (out - 90) + 360;		
+			highest = out + 90;
 			
-			if(signal >= lowest || signal <= highest){
+			if(psignal >= lowest || psignal <= highest){
 				return "FROM";
 			}
 			else {
 				return "TO";
 			}
 		}
-		else if(obs >= 90 && obs <= 270){
-			lowest = obs - 90;
-			highest = obs + 90;
+		else if(out >= 90 && out <= 270){
+			lowest = out - 90;
+			highest = out + 90;
 			
-			if(signal >= lowest && signal <= highest){
+			if(psignal >= lowest && psignal <= highest){
 				return "FROM";
 			}
 			else {
@@ -98,10 +122,10 @@ public class VOR {
 			}
 		}
 		else{
-			lowest = obs - 90;
-			highest = (obs + 90) - 360;
+			lowest = out - 90;
+			highest = (out + 90) - 360;
 			
-			if(signal >= lowest || signal <= highest ){
+			if(psignal >= lowest || psignal <= highest ){
 				return "FROM";
 			}
 			else {
@@ -115,31 +139,13 @@ public class VOR {
 	 * The radius of the cone of confusion is 10. 
 	 *@return false
 	 */
-	public boolean isGoodSignal(int xSLocation, int ySlocation, int xPLocation, int yPlocation){
+	public boolean isGoodSignal(int xSlocation, int ySlocation, int xPlocation, int yPlocation){
 		if( (Math.abs(xSlocation - xPlocation) < 10) || (Math.abs(ySlocation - yPlocation) <10) ) {
 			return false; 
 		}
 		else{
 			return true;
 		}
-	}
-	
-	public printVOR(){
-		//if(isGoodSignal()) {
-		//	System.println("Signal Type: Good"); 
-		//}
-		//else{
-		//	System.println("Signal Type: Bad");
-		//}
-		int obs= vor.getOBS();
-		int signal = vor.getSignal();
-		
-		String typeTF = vor.getToAndFrom(obs,signal);
-		
-		System.out.println("Obs: " + obs);
-		System.out.println("Signal: " + signal);
-		System.out.println("To or From: " + typeTF);
-          
 	}
 	
 	public String isGoodSignalD(int obs, int signal, String isGood) {
@@ -369,6 +375,22 @@ public class VOR {
 //          System.out.println(result);
             return result;
         }
+        
+        public void testSignal(){
+        VOR vor = new VOR();
+        for (int i = 0; i < 361; i++) {
+			for (int j = 0; j < 361; j++) {
+				String typeTF3 = vor.getToAndFrom(i,j);
+                		System.out.println("(Test) Obs: " + i);
+                		System.out.println("(Test) Radio: " + j);
+                		String isGood = vor.isGoodSignalD(i, j, "GOOD");
+                		System.out.println("(Test) Good or Bad: " + isGood);
+                		if (isGood.equals("GOOD")) {
+                    			System.out.println("(Test) To or From: " + typeTF3);
+               			}
+                		System.out.println();
+            		}
+        	}
+        }
 
-	
 }

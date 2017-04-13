@@ -12,7 +12,7 @@ public class Station {
 	public static int signalC;
 
 	public Station() {
-		signalC = this.signalC;
+		signalC = this.setSignalV();
 	}
 
 	public static int getSignal() {

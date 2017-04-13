@@ -2,33 +2,32 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class VOR {
-        public static void main(String[] args) {
-            VOR vor = new VOR();
 
-    //		int obs= vor.getOBS();
-    //		int signal = vor.getSignal();
-    //		
-    //		String typeTF = vor.getToAndFrom(obs,signal);
-    //		
-    //		System.out.println("Obs: " + obs);
-    //		System.out.println("Signal: " + signal);
-    //		System.out.println("To or From: " + typeTF);
-    //                
-    //    System.out.println();
-    //        
-    //    int obs2= vor.getOBS();
-    //    int radio = vor.randomRadio();
-    //
-    //    String typeTF2 = vor.getToAndFrom(obs2,radio);
-    //
-    //    System.out.println("Obs2: " + obs2);
-    //    System.out.println("Signal2: " + radio);
-    //    System.out.println("To or From (2): " + typeTF2);
-
-        /*
-        Test cases 360*360
-         */
+	public static void main(String[] args) {
+		VOR vor = new VOR();
 		
+		int obs= vor.getOBS();
+		int signal = vor.getSignal();
+		
+		String typeTF = vor.getToAndFrom(obs,signal);
+		
+		System.out.println("Obs: " + obs);
+		System.out.println("Signal: " + signal);
+		System.out.println("To or From: " + typeTF);
+          
+      /**      
+                System.out.println();
+        
+                int obs2= vor.getOBS();
+                int radio = vor.randomRadio();
+
+                String typeTF2 = vor.getToAndFrom(obs2,radio);
+
+                System.out.println("Obs2: " + obs2);
+                System.out.println("Signal2: " + radio);
+                System.out.println("To or From (2): " + typeTF2);
+	*/
+
 		for (int i = 0; i < 361; i++) {
 		    for (int j = 0; j < 361; j++) {
 			String typeTF3 = vor.getToAndFrom(i,j);
@@ -42,6 +41,7 @@ public class VOR {
 			System.out.println();
 		    }
 		}
+
 	}
 	
 	
@@ -59,6 +59,7 @@ public class VOR {
 	
 	/**
 	 * Asks directly what the radio signal is through console.
+	 * Change once we get station.
 	 */
 	public int getSignal(){
 		Scanner scan = new Scanner(System.in);
@@ -111,10 +112,12 @@ public class VOR {
 		}		
 	}
 	
+	
 	/**
-	 * If the plane is directly above the station then it will be a bad signal and will 
+	 * The radius of the cone of confusion is 10. 
 	 *@return false
 	 */
+
 	public String isGoodSignalD(int obs, int signal, String isGood) {
         String result = isGood;
         int lowest = 0;
@@ -331,6 +334,34 @@ public class VOR {
             }
         }
     }
+
+	public boolean isGoodSignal(int xSLocation, int ySlocation, int xPLocation, int yPlocation){
+		if( (Math.abs(xSlocation - xPlocation) < 10) || (Math.abs(ySlocation - yPlocation) <10) ) {
+			return false; 
+		}
+		else{
+			return true;
+		}
+	}
+	
+	public printVOR(){
+		//if(isGoodSignal()) {
+		//	System.println("Signal Type: Good"); 
+		//}
+		//else{
+		//	System.println("Signal Type: Bad");
+		//}
+		int obs= vor.getOBS();
+		int signal = vor.getSignal();
+		
+		String typeTF = vor.getToAndFrom(obs,signal);
+		
+		System.out.println("Obs: " + obs);
+		System.out.println("Signal: " + signal);
+		System.out.println("To or From: " + typeTF);
+          
+	}
+
         
         /**
         * Create a fake random radio
@@ -343,4 +374,5 @@ public class VOR {
             return result;
         }
 
+	
 }

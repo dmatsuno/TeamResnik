@@ -14,7 +14,8 @@ public class VOR {
 		System.out.println("Obs: " + obs);
 		System.out.println("Signal: " + signal);
 		System.out.println("To or From: " + typeTF);
-                
+          
+      /**      
                 System.out.println();
         
                 int obs2= vor.getOBS();
@@ -25,6 +26,7 @@ public class VOR {
                 System.out.println("Obs2: " + obs2);
                 System.out.println("Signal2: " + radio);
                 System.out.println("To or From (2): " + typeTF2);
+	*/
 	}
 	
 	
@@ -42,6 +44,7 @@ public class VOR {
 	
 	/**
 	 * Asks directly what the radio signal is through console.
+	 * Change once we get station.
 	 */
 	public int getSignal(){
 		Scanner scan = new Scanner(System.in);
@@ -94,12 +97,36 @@ public class VOR {
 		}		
 	}
 	
+	
 	/**
-	 * If the plane is directly above the station then it will be a bad signal and will 
+	 * The radius of the cone of confusion is 10. 
 	 *@return false
 	 */
-	public boolean isGoodSignal(){
-		return false; 
+	public boolean isGoodSignal(int xSLocation, int ySlocation, int xPLocation, int yPlocation){
+		if( (Math.abs(xSlocation - xPlocation) < 10) || (Math.abs(ySlocation - yPlocation) <10) ) {
+			return false; 
+		}
+		else{
+			return true;
+		}
+	}
+	
+	public printVOR(){
+		//if(isGoodSignal()) {
+		//	System.println("Signal Type: Good"); 
+		//}
+		//else{
+		//	System.println("Signal Type: Bad");
+		//}
+		int obs= vor.getOBS();
+		int signal = vor.getSignal();
+		
+		String typeTF = vor.getToAndFrom(obs,signal);
+		
+		System.out.println("Obs: " + obs);
+		System.out.println("Signal: " + signal);
+		System.out.println("To or From: " + typeTF);
+          
 	}
         
         /**
@@ -113,4 +140,5 @@ public class VOR {
             return result;
         }
 
+	
 }

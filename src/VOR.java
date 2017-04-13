@@ -131,12 +131,7 @@ public class VOR {
 	}
 	
 	public void printVOR(){
-		//if(isGoodSignal()) {
-		//	System.println("Signal Type: Good"); 
-		//}
-		//else{
-		//	System.println("Signal Type: Bad");
-		//}
+		
           
 	}
 	

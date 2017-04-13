@@ -5,6 +5,8 @@ public class VOR {
 
 	public static void main(String[] args) {
 		VOR vor = new VOR();
+		Station s = new Station();
+		int stSignal = s.getSignal();
 		
 		int obs= vor.getOBS();
 		int signal = vor.getSignal();

@@ -14,6 +14,10 @@ public class VOR {
 		System.out.println("Obs: " + obs);
 		System.out.println("Signal: " + signal);
 		System.out.println("To or From: " + typeTF);
+		
+		boolean signalType = vor.isGoodSignal(0, 0, -9, 50);
+		
+		System.out.println("Signal Type: " + signalType);
           
       /**      
                 System.out.println();
@@ -102,7 +106,7 @@ public class VOR {
 	 * The radius of the cone of confusion is 10. 
 	 *@return false
 	 */
-	public boolean isGoodSignal(int xSLocation, int ySlocation, int xPLocation, int yPlocation){
+	public boolean isGoodSignal(int xSlocation, int ySlocation, int xPlocation, int yPlocation){
 		if( (Math.abs(xSlocation - xPlocation) < 10) || (Math.abs(ySlocation - yPlocation) <10) ) {
 			return false; 
 		}
@@ -111,21 +115,13 @@ public class VOR {
 		}
 	}
 	
-	public printVOR(){
+	public void printVOR(){
 		//if(isGoodSignal()) {
 		//	System.println("Signal Type: Good"); 
 		//}
 		//else{
 		//	System.println("Signal Type: Bad");
 		//}
-		int obs= vor.getOBS();
-		int signal = vor.getSignal();
-		
-		String typeTF = vor.getToAndFrom(obs,signal);
-		
-		System.out.println("Obs: " + obs);
-		System.out.println("Signal: " + signal);
-		System.out.println("To or From: " + typeTF);
           
 	}
         

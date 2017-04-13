@@ -28,32 +28,21 @@ public class VOR {
         /*
         Test cases 360*360
          */
-            for (int i = 0; i < 361; i++) {
-                for (int j = 0; j < 361; j++) {
-                    String typeTF3 = vor.getToAndFrom(i,j);
-                    String isGood = vor.isGoodSignal(i, j);
-                    System.out.println("(Test) Obs: " + i);
-                    System.out.println("(Test) Radio: " + j);
-                    System.out.println("(Test) To or From: " + typeTF3);
-                    System.out.println("(Test) Good or Bad: " + isGood);
-                    System.out.println();
-                }
-            }
 		
-	for (int i = 0; i < 361; i++) {
-            for (int j = 0; j < 361; j++) {
-                String typeTF3 = vor.getToAndFrom(i,j);
-                System.out.println("(Test) Obs: " + i);
-                System.out.println("(Test) Radio: " + j);
-                String isGood = vor.isGoodSignal(i, j, "GOOD");
-                System.out.println("(Test) Good or Bad: " + isGood);
-                if (isGood.equals("GOOD")) {
-                    System.out.println("(Test) To or From: " + typeTF3);
-                }
-                System.out.println();
-            }
-        }
-        }
+		for (int i = 0; i < 361; i++) {
+		    for (int j = 0; j < 361; j++) {
+			String typeTF3 = vor.getToAndFrom(i,j);
+			System.out.println("(Test) Obs: " + i);
+			System.out.println("(Test) Radio: " + j);
+			String isGood = vor.isGoodSignalD(i, j, "GOOD");
+			System.out.println("(Test) Good or Bad: " + isGood);
+			if (isGood.equals("GOOD")) {
+			    System.out.println("(Test) To or From: " + typeTF3);
+			}
+			System.out.println();
+		    }
+		}
+	}
 	
 	
 	/**
@@ -126,7 +115,7 @@ public class VOR {
 	 * If the plane is directly above the station then it will be a bad signal and will 
 	 *@return false
 	 */
-	public String isGoodSignal(int obs, int signal, String isGood) {
+	public String isGoodSignalD(int obs, int signal, String isGood) {
         String result = isGood;
         int lowest = 0;
 	int highest = 0;

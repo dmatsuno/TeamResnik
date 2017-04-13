@@ -28,6 +28,7 @@ public class VOR {
                 System.out.println("To or From (2): " + typeTF2);
 	*/
 
+
 		for (int i = 0; i < 361; i++) {
 		    for (int j = 0; j < 361; j++) {
 			String typeTF3 = vor.getToAndFrom(i,j);
@@ -117,6 +118,7 @@ public class VOR {
 	 * The radius of the cone of confusion is 10. 
 	 *@return false
 	 */
+
 
 	public String isGoodSignalD(int obs, int signal, String isGood) {
         String result = isGood;
@@ -342,6 +344,25 @@ public class VOR {
 		else{
 			return true;
 		}
+
+	}
+	
+	public printVOR(){
+		//if(isGoodSignal()) {
+		//	System.println("Signal Type: Good"); 
+		//}
+		//else{
+		//	System.println("Signal Type: Bad");
+		//}
+		int obs= vor.getOBS();
+		int signal = vor.getSignal();
+		
+		String typeTF = vor.getToAndFrom(obs,signal);
+		
+		System.out.println("Obs: " + obs);
+		System.out.println("Signal: " + signal);
+		System.out.println("To or From: " + typeTF);
+          
 	}
 	
 	public printVOR(){

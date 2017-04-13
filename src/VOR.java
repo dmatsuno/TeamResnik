@@ -12,8 +12,12 @@ public class VOR {
 		
 		
 		//Grid range
-		int gridX = 50;
-		int gridY = 30;
+		int gridX = 100;
+		int gridY = 100;
+		
+		//Station location
+		int statX = gridX/2;
+		int statY = gridY/2;
 		
 		//Plane location
 		int planeX = (int)(Math.random() * gridX);
@@ -25,66 +29,38 @@ public class VOR {
 		while(option != 0 ) {
 			System.out.println("Type the number and enter to chose your option.");
 			System.out.println("0) Exit");
-			System.out.println("1) Print Grid");
-			System.out.println("2) Change Plane Location");
-			System.out.println("3) Get VOR");
+			System.out.println("1) Get VOR");
 			
 			option = scan.nextInt();
 					
-			
 			if( option == 0 ) {
 				System.out.println("You exited the program.");		
 			} 
 			else if (option == 1) {
-			//grid
-				for(int y = 0; y <= gridY; y++){
-					for( int x = 0; x <= gridX; x++) {
-						if(x == (gridX/2) && y == (gridY/2)){
-							System.out.print("S");
-						} else if (x == planeX && y == planeY) {
-							System.out.print("P");
-						} else {
-							System.out.print(".");
-						}
-					}
-					System.out.println("");
-				}
-				System.out.println("");
-			}
-			else if(option == 2){
-			//change plane location
-				System.out.println("Planes new X coordinate:");
-				planeX = scan.nextInt();
-				System.out.println("Planes new Y coordinate:");
-				planeY = scan.nextInt();
-			}
-			else if (option == 3) {
+			//getVOR
 				int obs= vor.setOBS();
-				//int signal = vor.setSignal();
-		
+				int locationAngle = vor.setAngle();
 				
-				String typeTF = vor.getToAndFrom(obs,signal);
+				String typeTF = vor.getToAndFrom(obs, locationAngle);
 		
 				System.out.println("Obs: " + obs);
-				System.out.println("Signal: " + signal);
 				System.out.println("To or From: " + typeTF);
 		
-				boolean signalType = vor.isGoodSignal(0, 0, -9, 50);
+          		String isGood = vor.isGoodSignalD(obs, locationAngle, "GOOD");
+                System.out.println("Good or Bad: " + isGood);
+
+                System.out.println();
 		
-				System.out.println("Signal Type: " + signalType);
 			} 
 			else {
 				System.out.println("The option you chose does not exist. Please enter again.");
 			}
 			
-			
 		
 		}
 		
-		
-          
 	
-	//Test signal
+	/////////////Uncomment below to activate in depth testing ////////////////////
 	//vor.testSignal();
 		
 	}
@@ -96,7 +72,7 @@ public class VOR {
 	public int setOBS(){
 		Scanner scan = new Scanner(System.in);
 		
-		System.out.println("Which way are you headed?");
+		System.out.println("Set your obs setting");
 		int obs = scan.nextInt();
 
 		return obs;
@@ -106,13 +82,13 @@ public class VOR {
 	 * Asks directly what the radio signal is through console.
 	 * Change once we get station.
 	 */
-	public int setSignal(){
+	public int setAngle(){
 		Scanner scan = new Scanner(System.in);
 		
-		System.out.println("What is your signal setting?");
-		int signal = scan.nextInt();
+		System.out.println("Which location are you coming from?");
+		int angle = scan.nextInt();
 		
-		return signal;
+		return angle;
 	}
 	
 	/**
@@ -169,11 +145,6 @@ public class VOR {
 		else{
 			return true;
 		}
-	}
-	
-	public void printVOR(){
-		
-          
 	}
 	
 	public String isGoodSignalD(int obs, int signal, String isGood) {
@@ -421,5 +392,4 @@ public class VOR {
         	}
         }
 
-	
 }

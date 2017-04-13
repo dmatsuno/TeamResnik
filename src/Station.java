@@ -10,8 +10,6 @@ import java.util.Random;
  */
 public class Station {
 	public static int signalC;
-	public static int x = 50;
-	public static int y = 50;
 
 	public Station() {
 		signalC = this.setSignalV();

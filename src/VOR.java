@@ -38,6 +38,7 @@ public class VOR {
 			} 
 			else if (option == 1) {
 			//getVOR
+
 				int obs= vor.setOBS();
 				int locationAngle = vor.setAngle();
 				
@@ -85,7 +86,7 @@ public class VOR {
 	public int setAngle(){
 		Scanner scan = new Scanner(System.in);
 		
-		System.out.println("Which location are you coming from?");
+		System.out.println("Which location are you coming from (in degrees)?");
 		int angle = scan.nextInt();
 		
 		return angle;

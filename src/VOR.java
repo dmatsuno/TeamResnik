@@ -29,7 +29,9 @@ public class VOR {
 		while(option != 0 ) {
 			System.out.println("Type the number and enter to chose your option.");
 			System.out.println("0) Exit");
-			System.out.println("1) Get VOR");
+			System.out.println("1) Print Grid");
+			System.out.println("2) Change Plane location");
+			System.out.println("3) Simulate VOR");
 			
 			option = scan.nextInt();
 					
@@ -37,8 +39,32 @@ public class VOR {
 				System.out.println("You exited the program.");		
 			} 
 			else if (option == 1) {
+			//grid
+				for(int y = 0; y <= gridY; y++){
+					for( int x = 0; x <= gridX; x++) {
+						if(x == (statX) && y == (statY)){
+							System.out.print("S");
+						} else if (x == planeX && y == planeY) {
+							System.out.print("P");
+						} else {
+							System.out.print(".");
+						}
+					}
+					System.out.println("");
+				}
+				System.out.println("\nPlane Coordinates: ( " + planeX + ", " + planeY + ")");
+				
+				
+			}
+			else if(option == 2){
+			//change plane location
+				System.out.println("Planes new X coordinate (0 - 100):");
+				planeX = scan.nextInt();
+				System.out.println("Planes new Y coordinate (0 - 100):");
+				planeY = scan.nextInt();
+			}
+			else if (option == 3) {
 			//getVOR
-
 				int obs= vor.setOBS();
 				int locationAngle = vor.setAngle();
 				
@@ -86,7 +112,7 @@ public class VOR {
 	public int setAngle(){
 		Scanner scan = new Scanner(System.in);
 		
-		System.out.println("Which location are you coming from (in degrees)?");
+		System.out.println("Which location are you coming from?");
 		int angle = scan.nextInt();
 		
 		return angle;
